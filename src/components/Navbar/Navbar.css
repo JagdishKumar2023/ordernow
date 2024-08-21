@@ -3,7 +3,34 @@
   padding: 0;
 }
 
-.logoContainer img {
-  width: 120px;
-  height: 90px;
+.navbar {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  height: 150px;
+  width: 240px;
+  padding-left: 40px;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  color: #49557e;
+  gap: 40px;
+  font-size: 26px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  padding-right: 80px;
+  text-transform: capitalize;
+}
+
+.navbar-right {
+  /* border: ` solid red; */
+  display: flex;
+  gap: 60px;
+  align-items: center;
 }

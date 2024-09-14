@@ -1,17 +1,39 @@
-import React from "react";
+import { useState } from "react";
 import Ordernow2 from "../../components/Navbar/ordernow2.png";
 import "./Navbar.css";
-import { assets } from "../../../assets/assets";
+import { assets } from "../../assets/assets";
 
 const Navbar = () => {
+  const [menu, setMenu] = useState("");
+
   return (
     <div className="navbar">
       <img src={Ordernow2} alt="" className="logo" />
       <ul className="navbar-menu">
-        <li>home</li>
-        <li>menu</li>
-        <li>mobile-app</li>
-        <li>contact us</li>
+        <li
+          onClick={() => setMenu("home")}
+          className={menu === "home" ? "active" : ""}
+        >
+          home
+        </li>
+        <li
+          onClick={() => setMenu("menu")}
+          className={menu === "menu" ? "active" : ""}
+        >
+          menu
+        </li>
+        <li
+          onClick={() => setMenu("moblie-app")}
+          className={menu === "moblie-app" ? "active" : ""}
+        >
+          mobile-app
+        </li>
+        <li
+          onClick={() => setMenu("contact-us")}
+          className={menu === "contact-us" ? "active" : ""}
+        >
+          contact us
+        </li>
       </ul>
       <div className="navbar-right">
         <img src={assets.search_icon} alt="" />

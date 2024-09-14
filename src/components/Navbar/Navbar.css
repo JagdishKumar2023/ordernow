@@ -1,36 +1,84 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: Outfit;
+}
+
+body {
+  min-height: 40vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .navbar {
-  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  background: transparent;
+  padding: 1px;
 }
 
 .logo {
   height: 150px;
-  width: 240px;
-  padding-left: 40px;
+  width: 230px;
+  padding-left: 60px;
 }
 
 .navbar-menu {
   display: flex;
   list-style: none;
   color: #49557e;
-  gap: 40px;
-  font-size: 26px;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  padding-right: 80px;
+  gap: 70px;
+  font-size: 23px;
+  padding-right: 10px;
   text-transform: capitalize;
+  transition: 0.3s;
+}
+
+.navbar-menu li {
+  cursor: pointer;
 }
 
 .navbar-right {
   /* border: ` solid red; */
   display: flex;
-  gap: 60px;
+  gap: 70px;
   align-items: center;
+  padding-right: 100px;
+}
+
+.navbar button {
+  background: transparent;
+  font-size: 16px;
+  color: #49557e;
+  padding: 10px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.navbar button:hover {
+  background-color: #fff4f2;
+}
+
+.navbar .active {
+  padding-bottom: 2px;
+  border-bottom: 2px solid #49557e;
+}
+
+.navbar-search-icon {
+  position: relative;
+}
+
+.navbar-search-icon .dot {
+  position: absolute;
+  min-width: 10px;
+  min-height: 10px;
+  background-color: tomato;
+  top: -8px;
+  right: -8px;
+  border-radius: 6px;
 }

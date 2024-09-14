@@ -1,0 +1,19 @@
+.food-display {
+  margin-left: 60px;
+  /* border: 2px solid red; */
+  margin-right: 40px;
+}
+
+.food-heading {
+  color: orangered;
+  font-weight: 400px;
+  margin-top: 38px;
+}
+
+.food-display-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  margin-top: 50px;
+  gap: 30px;
+  row-gap: 40px;
+}

@@ -60,3 +60,33 @@
   margin-top: 25px;
   animation: fadeIn 4s;
 }
+
+@media (max-width: 1050) {
+  .header {
+    height: 38vw;
+  }
+  .header-contents {
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 1050) {
+  .header {
+    height: 30vw;
+  }
+  .header-contents {
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 750) {
+  .header {
+    height: 30vw;
+  }
+  .header-contents p {
+    display: none;
+  }
+  .header-contents button {
+    padding: 2vw 4vw;
+  }
+}

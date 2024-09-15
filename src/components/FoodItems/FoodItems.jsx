@@ -1,25 +1,14 @@
 /* eslint-disable react/prop-types */
 import { assets } from "../../assets/assets.js";
+import { StoreContext } from "../../context/StoreContextProvider.jsx";
 import "./FoodItem.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 const FoodItems = ({ id, name, image, description, price }) => {
-  const [cartItems, setCartItems] = useState({});
-
-  const addToCart = (itemId) => {
-    if (!cartItems[itemId]) {
-      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
-    } else {
-      setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    }
-  };
-
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-  };
+  const { removeFromCart, addToCart, cartItems } = useContext(StoreContext);
 
   useEffect(() => {
-    console.log(cartItems);
+    // console.log(,);
   }, [cartItems]);
 
   return (

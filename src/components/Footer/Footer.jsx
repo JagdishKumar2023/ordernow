@@ -29,7 +29,8 @@ const Footer = () => {
           </ul>
           <div className="footer-Welcome-text">
             <h1>
-              Welcome to <span>Order Now food Zone </span>
+              Welcome to
+              <br /> <span>Order Now food Zone </span>
               <span>Order Now!</span>
             </h1>
           </div>

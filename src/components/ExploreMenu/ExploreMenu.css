@@ -10,7 +10,7 @@
   max-width: 60%;
   font-weight: 700;
   margin-top: 30px;
-  color: orangered;
+  color: rgb(143, 0, 149);
 }
 
 .explore-menu-text {
@@ -53,5 +53,5 @@
   font-size: 22px;
   font-weight: 500;
   padding-top: 12px;
-  color: rgb(255, 166, 0);
+  color: rgb(143, 0, 149);
 }

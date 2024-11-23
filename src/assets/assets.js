@@ -301,7 +301,7 @@ export const food_list = [
   },
   {
     _id: "21",
-    name: "Garlic Mushroom ",
+    name: "Garlic Mushroom",
     image: food_21,
     price: 140,
     description:
@@ -357,7 +357,7 @@ export const food_list = [
     _id: "27",
     name: "Creamy Pasta",
     image: food_27,
-    price: 166,
+    price: 170,
     description:
       "Food provides essential nutrients for overall health and well-being",
     category: "Pasta",

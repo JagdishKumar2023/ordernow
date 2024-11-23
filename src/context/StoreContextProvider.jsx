@@ -1,47 +1,73 @@
-/* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
-import { food_list } from "../assets/assets.js";
+import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
-//In this part of context provider any problem facesing in array list In food_list problem then I was is direct in the array import in other file this is error in context solved it
-
-export const StoreContext = createContext();
+export const StoreContext = createContext(null);
 
 export const StoreContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
+  const url = "http://localhost:4000";
+  const [token, setToken] = useState("");
+  const [food_list, setFoodList] = useState([]);
 
   const addToCart = (itemId) => {
-    if (!cartItems[itemId]) {
-      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
-    } else {
-      setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    }
+    setCartItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] || 0) + 1,
+    }));
   };
 
   const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    setCartItems((prev) => {
+      const newCount = (prev[itemId] || 0) - 1;
+      if (newCount <= 0) {
+        const { [itemId]: _, ...rest } = prev; // Remove item from cart
+        return rest;
+      }
+      return { ...prev, [itemId]: newCount };
+    });
   };
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo = food_list.find((product) => product._id === item);
-        totalAmount += itemInfo.price * cartItems[item];
+        const itemInfo = food_list.find((product) => product._id === item);
+        if (itemInfo) {
+          totalAmount += itemInfo.price * cartItems[item];
+        }
       }
     }
     return totalAmount;
   };
 
+  const fetchFoodList = async () => {
+    const response = await axios.get(url + "/api/food/list");
+    setFoodList(response.data.data);
+  };
+
+  useEffect(() => {
+    async function loadData() {
+      await fetchFoodList();
+      if (localStorage.getItem("token")) {
+        setToken(localStorage.getItem("token"));
+      }
+    }
+    loadData();
+  }, []);
+
+  const contextValue = {
+    food_list,
+    removeFromCart,
+    addToCart,
+    cartItems,
+    getTotalCartAmount,
+    token,
+    setToken,
+    url,
+  };
+
   return (
-    <StoreContext.Provider
-      value={{
-        food_list,
-        removeFromCart,
-        addToCart,
-        cartItems,
-        getTotalCartAmount,
-      }}
-    >
+    <StoreContext.Provider value={contextValue}>
       {children}
     </StoreContext.Provider>
   );

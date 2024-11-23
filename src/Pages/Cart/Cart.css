@@ -72,6 +72,13 @@
   cursor: pointer;
 }
 
+.food-item-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9; /* Adjust the ratio as needed */
+  object-fit: cover; /* This keeps the aspect ratio while cropping the image */
+}
+
 .cart-promocode {
   flex: 1;
 }

@@ -5,11 +5,10 @@ import "./Cart.css";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cartItems, removeFromCart, getTotalCartAmount, url } =
+  const { cartItems, removeFromCart, getTotalCartAmount } =
     useContext(StoreContext);
-  const navigate = useNavigate();
 
-  const deliveryFee = getTotalCartAmount() === 0 ? 0 : 40;
+  const navigate = useNavigate();
 
   return (
     <div className="cart-container-main">
@@ -29,14 +28,14 @@ const Cart = () => {
             <p className="cart-empty">Your cart is empty!</p>
           ) : (
             food_list.map(
-              (item, index) =>
+              (item) =>
                 cartItems[item._id] > 0 && (
                   <div
                     key={item._id}
                     className="cart-items-title cart-items-item"
                   >
                     <img
-                      src={`${url}/images/${item.image}`}
+                      src={item.image}
                       alt={item.name}
                       className="cart-item-image"
                     />
@@ -64,23 +63,22 @@ const Cart = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>₹ {getTotalCartAmount()}</p>
+              <p>₹{getTotalCartAmount()}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>₹ {deliveryFee}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>₹ {getTotalCartAmount() + deliveryFee}</b>
+              <b>₹ {getTotalCartAmount()}</b>
             </div>
           </div>
           <button
             onClick={() => navigate("/order")}
             className="cart-total-btn"
-            disabled={getTotalCartAmount() === 0}
+            // disabled={getTotalCartAmount() === 0}
           >
             PROCEED TO CHECKOUT
           </button>

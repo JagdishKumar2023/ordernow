@@ -1,53 +1,42 @@
-import { useContext } from "react";
 import "./FoodItem.css";
 import { assets } from "../../assets/assets";
+import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContextProvider.jsx";
 
 const FoodItems = ({ id, name, price, description, image }) => {
-  const { cartItems, addToCart, removeFromCart, url } =
-    useContext(StoreContext);
+  const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
 
   // console.log(url);
 
   return (
     <div className="food-item">
       <div className="food-item-img-container">
-        <img
-          className="food-item-image"
-          src={url + "/images/" + image}
-          alt={name}
-        />
+        <img className="food-item-image" src={image} alt={name} />
         {!cartItems[id] ? (
-          <button onClick={() => addToCart(id)}>
-            <img
-              className="add"
-              src={assets.add_icon_white}
-              alt={`Add ${name} to cart`}
-            />
-          </button>
+          <img
+            className="add"
+            onClick={() => addToCart(id)}
+            src={assets.add_icon_white}
+          />
         ) : (
-          <div className="food-item-counter">
-            <button onClick={() => removeFromCart(id)}>
-              <img src={assets.remove_icon_red} />
-            </button>
+          <div>
+            <img
+              onClick={() => removeFromCart(id)}
+              src={assets.remove_icon_red}
+              alt=""
+            />
             <p>{cartItems[id]}</p>
-            <button onClick={() => addToCart(id)}>
-              <img src={assets.add_icon_green} alt={`Add ${name} to cart`} />
-            </button>
+            <img
+              src={assets.add_icon_green}
+              alt=""
+              onClick={() => addToCart(id)}
+            />
           </div>
         )}
       </div>
       <div className="food-item-info">
-        <div className="food-item-name-rating">
-          <p>{name}</p>
-          <img
-            src={assets.rating_starts}
-            alt="Rating"
-            className="rating-value"
-          />
-        </div>
-        <p className="food-item-des">{description}</p>
-        <p className="food-item-price">₹ {price}</p>
+        <p className="food-item-desc">{description}</p>
+        <p className="food-item-price">₹{price}</p>
       </div>
     </div>
   );

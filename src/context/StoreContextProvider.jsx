@@ -1,10 +1,10 @@
 import { createContext, useState } from "react";
 
-export const StoreContext = createContext(null);
+export const StoreContext = createContext();
 
 export const StoreContextProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState({});
   const [food_list, setFoodList] = useState([]);
+  const [cartItems, setCartItems] = useState({});
 
   const addToCart = (itemId) => {
     if (!cartItems[itemId]) {
@@ -20,18 +20,21 @@ export const StoreContextProvider = ({ children }) => {
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
+    for (const itemId in cartItems) {
+      const quantity = cartItems[itemId];
+      if (quantity > 0) {
         const itemInfo = food_list.find(
-          (product) => product.id === Number(item)
+          (product) => product.id === Number(itemId)
         );
         if (itemInfo) {
-          totalAmount += itemInfo.new_price * cartItems[item]; // Calculate total amount based on price and quantity
+          const price = itemInfo.new_price || 0;
+          totalAmount += price * quantity;
         }
       }
     }
     return totalAmount;
   };
+
   const contextValue = {
     food_list,
     removeFromCart,

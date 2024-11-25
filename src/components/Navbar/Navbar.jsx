@@ -49,7 +49,6 @@ const Navbar = ({ setShowLogin }) => {
         </li>
       </ul>
       <div className="navbar-right">
-        <img src={assets.search_icon} alt="Search" />
         <div className="navbar-search-icon">
           <Link to="/cart" aria-label="Cart">
             <img src={assets.basket_icon} alt="Basket" />

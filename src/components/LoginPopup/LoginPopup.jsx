@@ -1,13 +1,8 @@
-import { useContext, useState } from "react";
+import { useState, useEffect } from "react";
 import { assets } from "../../assets/assets";
 import "./LoginPopup.css";
-import { StoreContext } from "../../context/StoreContextProvider";
-import axios from "axios";
 
-// eslint-disable-next-line react/prop-types
 const LoginPopup = ({ setShowLogin }) => {
-  const { url, setToken } = useContext(StoreContext);
-
   const [currState, setCurrState] = useState("Login");
   const [data, setData] = useState({
     name: "",
@@ -15,27 +10,49 @@ const LoginPopup = ({ setShowLogin }) => {
     password: "",
   });
 
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData((data) => ({ ...data, [name]: value }));
+    const { name, value } = event.target;
+    setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const onLogin = async (event) => {
+  const onLogin = (event) => {
     event.preventDefault();
-    let newUrl = url;
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
     if (currState === "Login") {
-      newUrl += "/api/user/login";
+      const user = users.find(
+        (user) => user.email === data.email && user.password === data.password
+      );
+
+      if (user) {
+        setLoginSuccess(true);
+        setShowLogin(false); // Close the login popup
+        setErrorMessage(""); // Clear any previous error message
+        setData({ name: "", email: "", password: "" }); // Clear the input fields
+      } else {
+        setErrorMessage("Invalid email or password!"); // Show error if login fails
+        setLoginSuccess(false); // Reset login success state
+      }
     } else {
-      newUrl += "/api/user/register";
-    }
-    const response = await axios.post(newUrl, data);
-    if (response.data.success) {
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      setShowLogin(false);
-    } else {
-      alert(response.data.message);
+      if (users.some((user) => user.email === data.email)) {
+        setErrorMessage("Email already registered!"); // Prevent duplicate emails
+      } else {
+        const newUser = {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        };
+        users.push(newUser); // Add new user to the array
+        localStorage.setItem("users", JSON.stringify(users)); // Save updated array to localStorage
+        setLoginSuccess(true); // Sign-up successful
+        setShowLogin(false); // Close the login popup
+        setErrorMessage(""); // Clear error message
+        setData({ name: "", email: "", password: "" }); // Clear the input fields
+      }
     }
   };
 
@@ -48,13 +65,18 @@ const LoginPopup = ({ setShowLogin }) => {
             <img
               onClick={() => setShowLogin(false)}
               src={assets.cross_icon}
-              alt=""
+              alt="Close"
             />
           </div>
+
+          {loginSuccess && (
+            <div className="success-message">Login Successful!</div>
+          )}
+
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+
           <div className="login-popup-inputs">
-            {currState === "Login" ? (
-              <></>
-            ) : (
+            {currState === "Sign Up" && (
               <input
                 type="text"
                 name="name"
@@ -73,14 +95,15 @@ const LoginPopup = ({ setShowLogin }) => {
               required
             />
             <input
+              type="password"
               name="password"
               onChange={onChangeHandler}
               value={data.password}
-              type="password"
               placeholder="Enter Password"
               required
             />
           </div>
+
           <button type="submit" className="loginbtn">
             {currState === "Sign Up" ? "Create account" : "Login"}
           </button>
